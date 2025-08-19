@@ -147,9 +147,9 @@ export function CartPage({ user }: CartPageProps) {
                       variant="ghost"
                       size="icon"
                       onClick={() => (removeItemVariant ? removeItemVariant(item.id, item.size, item.color) : removeItem(item.id))}
-                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                      className="text-red-500 hover:text-red-700 hover:bg-red-50 h-10 w-10 sm:h-8 sm:w-8"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-5 w-5 sm:h-4 sm:w-4" />
                     </Button>
                   </div>
                 </CardContent>
