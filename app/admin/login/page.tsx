@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="admin@Mirza Garments.com"
+                    placeholder="Enter admin email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="pl-10"
@@ -138,9 +138,8 @@ export default function AdminLoginPage() {
 
             <div className="mt-6 p-4 bg-muted/50 rounded-lg">
               <p className="text-sm text-muted-foreground text-center">
-                <strong>Demo Credentials:</strong><br />
-                Email: admin@Mirza Garments.com<br />
-                Password: admin123
+                <strong>Admin Access Only</strong><br />
+                Please contact the system administrator for credentials.
               </p>
             </div>
           </CardContent>
