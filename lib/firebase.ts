@@ -18,13 +18,54 @@ const app = initializeApp(firebaseConfig)
 // Initialize Firebase Authentication
 export const auth = getAuth(app)
 
+// Convert Firebase error codes to user-friendly messages
+const getFirebaseErrorMessage = (errorCode: string): string => {
+  switch (errorCode) {
+    // Sign in errors
+    case 'auth/invalid-credential':
+      return 'Invalid email or password. Please check your credentials and try again.'
+    case 'auth/user-not-found':
+      return 'No account found with this email address. Please sign up first.'
+    case 'auth/wrong-password':
+      return 'Incorrect password. Please try again.'
+    case 'auth/too-many-requests':
+      return 'Too many failed attempts. Please try again later.'
+    case 'auth/user-disabled':
+      return 'This account has been disabled. Please contact support.'
+    
+    // Sign up errors
+    case 'auth/email-already-in-use':
+      return 'An account with this email already exists. Please sign in instead.'
+    case 'auth/weak-password':
+      return 'Password is too weak. Please choose a stronger password (at least 6 characters).'
+    case 'auth/invalid-email':
+      return 'Please enter a valid email address.'
+    
+    // Password reset errors
+    case 'auth/user-not-found':
+      return 'No account found with this email address.'
+    
+    // General errors
+    case 'auth/network-request-failed':
+      return 'Network error. Please check your internet connection and try again.'
+    case 'auth/operation-not-allowed':
+      return 'This operation is not allowed. Please contact support.'
+    case 'auth/requires-recent-login':
+      return 'Please sign in again to complete this action.'
+    
+    default:
+      return 'An error occurred. Please try again.'
+  }
+}
+
 // Authentication functions
 export const signUp = async (email: string, password: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
     return { user: userCredential.user, error: null }
   } catch (error: any) {
-    return { user: null, error: error.message }
+    const errorMessage = getFirebaseErrorMessage(error.code)
+    return { user: null, error: errorMessage }
   }
 }
 
@@ -33,7 +74,8 @@ export const signIn = async (email: string, password: string) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     return { user: userCredential.user, error: null }
   } catch (error: any) {
-    return { user: null, error: error.message }
+    const errorMessage = getFirebaseErrorMessage(error.code)
+    return { user: null, error: errorMessage }
   }
 }
 
@@ -42,7 +84,8 @@ export const resetPassword = async (email: string) => {
     await sendPasswordResetEmail(auth, email)
     return { error: null }
   } catch (error: any) {
-    return { error: error.message }
+    const errorMessage = getFirebaseErrorMessage(error.code)
+    return { error: errorMessage }
   }
 }
 
@@ -51,7 +94,8 @@ export const logout = async () => {
     await signOut(auth)
     return { error: null }
   } catch (error: any) {
-    return { error: error.message }
+    const errorMessage = getFirebaseErrorMessage(error.code)
+    return { error: errorMessage }
   }
 }
 

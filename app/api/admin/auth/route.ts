@@ -34,14 +34,14 @@ export async function POST(request: NextRequest) {
       return response
     } else {
       return NextResponse.json(
-        { success: false, error: 'Invalid credentials' },
+        { success: false, error: 'Invalid email or password. Please check your credentials and try again.' },
         { status: 401 }
       )
     }
   } catch (error) {
     console.error('Admin auth error:', error)
     return NextResponse.json(
-      { success: false, error: 'Authentication failed' },
+      { success: false, error: 'Authentication failed. Please try again later.' },
       { status: 500 }
     )
   }
