@@ -76,24 +76,31 @@ export function AdminHeader({ title, subtitle, showBackButton = false, backUrl =
     <div className="border-b border-border bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-4">
+          {/* Left side - Title and Back button */}
+          <div className="flex items-center gap-2 sm:gap-4">
             {showBackButton && (
               <Link href={backUrl}>
-                <Button variant="ghost" size="sm">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back
+                <Button variant="ghost" size="sm" className="p-2 sm:p-2">
+                  <ArrowLeft className="h-4 w-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Back</span>
                 </Button>
               </Link>
             )}
-            <div className="font-bold text-xl text-foreground">
+            <div className="font-bold text-lg sm:text-xl text-foreground">
               <span className="text-primary">Admin</span>
               <span className="text-accent">{title}</span>
             </div>
-            {subtitle && <Badge variant="secondary">{subtitle}</Badge>}
+            {subtitle && (
+              <Badge variant="secondary" className="hidden sm:inline-flex">
+                {subtitle}
+              </Badge>
+            )}
           </div>
-          <div className="flex items-center gap-2">
+
+          {/* Right side - User info and menu */}
+          <div className="flex items-center gap-1 sm:gap-2">
             {adminUser && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mr-4">
+              <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground mr-2">
                 <User className="h-4 w-4" />
                 <span>Welcome, {adminUser.name}</span>
               </div>
@@ -102,10 +109,10 @@ export function AdminHeader({ title, subtitle, showBackButton = false, backUrl =
             {/* Admin Menu Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="flex items-center gap-1 sm:gap-2 p-2 sm:p-2">
                   <Menu className="h-4 w-4" />
-                  Admin Menu
-                  <ChevronDown className="h-3 w-3" />
+                  <span className="hidden sm:inline">Admin Menu</span>
+                  <ChevronDown className="h-3 w-3 hidden sm:block" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
@@ -147,24 +154,26 @@ export function AdminHeader({ title, subtitle, showBackButton = false, backUrl =
                   </Link>
                 </DropdownMenuItem>
                 
-                            <DropdownMenuItem asChild>
-              <Link href="/admin/offers" className="flex items-center gap-2">
-                <Tag className="h-4 w-4" />
-                Manage Offers
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/admin/banner" className="flex items-center gap-2">
-                <Image className="h-4 w-4" />
-                Manage Banner
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/admin/delivery" className="flex items-center gap-2">
-                <Truck className="h-4 w-4" />
-                Manage Delivery
-              </Link>
-            </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/admin/offers" className="flex items-center gap-2">
+                    <Tag className="h-4 w-4" />
+                    Manage Offers
+                  </Link>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem asChild>
+                  <Link href="/admin/banner" className="flex items-center gap-2">
+                    <Image className="h-4 w-4" />
+                    Manage Banner
+                  </Link>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem asChild>
+                  <Link href="/admin/delivery" className="flex items-center gap-2">
+                    <Truck className="h-4 w-4" />
+                    Manage Delivery
+                  </Link>
+                </DropdownMenuItem>
                 
                 <DropdownMenuSeparator />
                 
@@ -192,7 +201,7 @@ export function AdminHeader({ title, subtitle, showBackButton = false, backUrl =
             </DropdownMenu>
             
             <Link href="/">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="hidden sm:flex">
                 Back to Store
               </Button>
             </Link>

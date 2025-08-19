@@ -123,16 +123,16 @@ export default function AdminDashboard() {
         subtitle="Dashboard"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Revenue</CardTitle>
               <DollarSign className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">৳{stats.totalRevenue.toLocaleString()}</div>
+              <div className="text-lg sm:text-2xl font-bold">৳{stats.totalRevenue.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">
                 <span className="text-green-600">+20.1%</span> from last month
               </p>
@@ -141,11 +141,11 @@ export default function AdminDashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Orders</CardTitle>
               <ShoppingCart className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalOrders}</div>
+              <div className="text-lg sm:text-2xl font-bold">{stats.totalOrders}</div>
               <p className="text-xs text-muted-foreground">
                 <span className="text-green-600">+15%</span> from last month
               </p>
@@ -154,11 +154,11 @@ export default function AdminDashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Products</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Products</CardTitle>
               <Package className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalProducts}</div>
+              <div className="text-lg sm:text-2xl font-bold">{stats.totalProducts}</div>
               <p className="text-xs text-muted-foreground">
                 <span className="text-green-600">+8</span> new products
               </p>
@@ -167,11 +167,11 @@ export default function AdminDashboard() {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Users</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalUsers}</div>
+              <div className="text-lg sm:text-2xl font-bold">{stats.totalUsers}</div>
               <p className="text-xs text-muted-foreground">
                 <span className="text-green-600">+12%</span> from last month
               </p>
@@ -180,17 +180,17 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
           <Link href="/admin/products">
             <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-center gap-3 sm:gap-4">
                   <div className="p-2 bg-primary/10 rounded-lg">
-                    <Package className="h-6 w-6 text-primary" />
+                    <Package className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Manage Products</h3>
-                    <p className="text-sm text-muted-foreground">Add, edit, or remove products</p>
+                    <h3 className="font-semibold text-sm sm:text-base">Manage Products</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Add, edit, or remove products</p>
                   </div>
                 </div>
               </CardContent>
@@ -199,14 +199,14 @@ export default function AdminDashboard() {
 
           <Link href="/admin/orders">
             <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-center gap-3 sm:gap-4">
                   <div className="p-2 bg-green-500/10 rounded-lg">
-                    <ShoppingCart className="h-6 w-6 text-green-600" />
+                    <ShoppingCart className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">View Orders</h3>
-                    <p className="text-sm text-muted-foreground">Track and manage orders</p>
+                    <h3 className="font-semibold text-sm sm:text-base">View Orders</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Track and manage orders</p>
                   </div>
                 </div>
               </CardContent>
@@ -215,14 +215,14 @@ export default function AdminDashboard() {
 
           <Link href="/admin/users">
             <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-center gap-3 sm:gap-4">
                   <div className="p-2 bg-blue-500/10 rounded-lg">
-                    <Users className="h-6 w-6 text-blue-600" />
+                    <Users className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Manage Users</h3>
-                    <p className="text-sm text-muted-foreground">View and manage customers</p>
+                    <h3 className="font-semibold text-sm sm:text-base">Manage Users</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">View and manage customers</p>
                   </div>
                 </div>
               </CardContent>
@@ -231,14 +231,14 @@ export default function AdminDashboard() {
 
           <Link href="/admin/analytics">
             <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4">
+              <CardContent className="p-4 sm:p-6">
+                <div className="flex items-center gap-3 sm:gap-4">
                   <div className="p-2 bg-purple-500/10 rounded-lg">
-                    <BarChart3 className="h-6 w-6 text-purple-600" />
+                    <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold">Analytics</h3>
-                    <p className="text-sm text-muted-foreground">View detailed reports</p>
+                    <h3 className="font-semibold text-sm sm:text-base">Analytics</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">View detailed reports</p>
                   </div>
                 </div>
               </CardContent>
@@ -247,7 +247,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -260,9 +260,9 @@ export default function AdminDashboard() {
                 <div className="space-y-4">
                                      {stats.recentOrders.map((order: any, index: number) => (
                      <div key={index} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                       <div>
-                         <p className="font-medium">{order.id}</p>
-                         <p className="text-sm text-muted-foreground">
+                       <div className="flex-1 min-w-0">
+                         <p className="font-medium text-sm sm:text-base truncate">{order.id}</p>
+                         <p className="text-xs sm:text-sm text-muted-foreground truncate">
                            {order.customer_name} • {order.status}
                          </p>
                          <p className="text-xs text-muted-foreground">
@@ -273,7 +273,9 @@ export default function AdminDashboard() {
                            })}
                          </p>
                        </div>
-                                               <Badge variant="outline">৳{(order.total || 0).toLocaleString()}</Badge>
+                       <Badge variant="outline" className="ml-2 flex-shrink-0 text-xs">
+                         ৳{(order.total || 0).toLocaleString()}
+                       </Badge>
                      </div>
                    ))}
                 </div>
@@ -301,18 +303,20 @@ export default function AdminDashboard() {
                        <img
                          src={product.image_url || "/placeholder.svg"}
                          alt={product.name}
-                         className="w-10 h-10 object-cover rounded-md"
+                         className="w-8 h-8 sm:w-10 sm:h-10 object-cover rounded-md flex-shrink-0"
                        />
-                       <div className="flex-1">
-                         <p className="font-medium">{product.name}</p>
-                         <p className="text-sm text-muted-foreground">
+                       <div className="flex-1 min-w-0">
+                         <p className="font-medium text-sm sm:text-base truncate">{product.name}</p>
+                         <p className="text-xs sm:text-sm text-muted-foreground truncate">
                            {product.category} • ৳{product.price.toLocaleString()}
                          </p>
                          <p className="text-xs text-muted-foreground">
                            {product.sales} sales
                          </p>
                        </div>
-                       <Badge variant="secondary">{product.stock_quantity} in stock</Badge>
+                       <Badge variant="secondary" className="text-xs flex-shrink-0">
+                         {product.stock_quantity} in stock
+                       </Badge>
                      </div>
                    ))}
                 </div>
