@@ -1,0 +1,8 @@
+{
+  "id": "admin-1",
+  "name": "Admin User",
+  "email": "konok@admin.com",
+  "passwordHash": "FUBBeTL+hGN4liEMYlYwBmUjCgItlVbfiMy42BWwUJ4=",
+  "salt": "bd040cO0a3YsI5hT1oeRRA==",
+  "updated_at": "2025-08-19T09:14:42.833Z"
+}

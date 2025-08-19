@@ -1,0 +1,18 @@
+{
+  "areas": [
+    {
+      "id": "thakurgaon",
+      "name": "ঠাকুরগাঁও",
+      "cost": 60,
+      "isActive": true
+    },
+    {
+      "id": "dinajpur",
+      "name": "দিনাজপুর",
+      "cost": 60,
+      "isActive": true
+    }
+  ],
+  "defaultCost": 120,
+  "updated_at": "2025-08-19T11:22:51.750Z"
+}
