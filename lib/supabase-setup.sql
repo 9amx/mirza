@@ -153,8 +153,8 @@ VALUES (
 
 -- Insert some default categories
 INSERT INTO categories (id, name, description) VALUES
-  ('cat-1', 'Men\'s Clothing', 'Quality men\'s garments'),
-  ('cat-2', 'Women\'s Clothing', 'Elegant women\'s fashion'),
+  ('cat-1', 'Mens Clothing', 'Quality mens garments'),
+  ('cat-2', 'Womens Clothing', 'Elegant womens fashion'),
   ('cat-3', 'Kids Clothing', 'Comfortable kids wear'),
   ('cat-4', 'Accessories', 'Fashion accessories')
 ON CONFLICT (id) DO NOTHING;
