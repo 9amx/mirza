@@ -432,7 +432,7 @@ const Homepage = () => {
                   <span className="text-primary">{storeName}</span>
                 )}
               </button>
-              <div className="hidden md:flex items-center gap-6">
+              <div className="hidden md:flex items-center gap-6 mr-4 lg:mr-6">
                 <button
                   onClick={() => handleNavigation("shop")}
                   className={`transition-colors font-medium ${currentView === "shop" ? "text-primary" : "text-muted-foreground hover:text-primary"}`}
@@ -454,9 +454,9 @@ const Homepage = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 lg:gap-6">
               <div className="hidden sm:flex relative">
-                <div className="flex items-center bg-input rounded-xl px-4 py-2 max-w-sm border border-border/50 focus-within:border-primary/50 transition-colors animate-fade-in">
+                <div className="flex items-center bg-input rounded-xl px-4 py-2 w-48 sm:w-64 lg:w-80 border border-border/50 focus-within:border-primary/50 transition-colors animate-fade-in">
                   <Search className="h-4 w-4 text-muted-foreground mr-2" />
                   <input
                     type="text"
