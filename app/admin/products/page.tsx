@@ -305,9 +305,9 @@ export default function AdminProductsPage() {
         backUrl="/admin"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
                  {/* Stats Cards */}
-         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
            <Card>
              <CardContent className="p-4">
                <div className="flex items-center gap-2">
@@ -355,7 +355,7 @@ export default function AdminProductsPage() {
          </div>
 
          {/* Search and Filters */}
-         <div className="flex flex-col sm:flex-row gap-4 mb-6">
+         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-6">
            <div className="flex-1">
              <div className="relative">
                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -367,7 +367,7 @@ export default function AdminProductsPage() {
                />
              </div>
            </div>
-           <div className="flex gap-2">
+           <div className="flex flex-col sm:flex-row gap-2">
              <select
                value={selectedCategory}
                onChange={(e) => setSelectedCategory(e.target.value)}
@@ -378,22 +378,22 @@ export default function AdminProductsPage() {
                  <option key={category} value={category}>{category}</option>
                ))}
              </select>
-             <Button variant="outline">
+             <Button variant="outline" className="sm:w-auto">
                <Filter className="h-4 w-4 mr-2" />
                Filter
              </Button>
            </div>
          </div>
 
-         <div className="flex items-center justify-between mb-6">
+         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
            <div>
-             <h2 className="text-2xl font-bold">Product Management</h2>
-             <p className="text-muted-foreground">
+             <h2 className="text-xl sm:text-2xl font-bold">Product Management</h2>
+             <p className="text-sm sm:text-base text-muted-foreground">
                Showing {filteredProducts.length} of {products.length} products
              </p>
            </div>
            <Button 
-             className="flex items-center gap-2"
+             className="flex items-center gap-2 w-full sm:w-auto"
              onClick={() => setShowAddProduct(true)}
            >
              <Plus className="h-4 w-4" />
@@ -401,28 +401,28 @@ export default function AdminProductsPage() {
            </Button>
          </div>
 
-                  <div className="grid gap-6">
+                  <div className="grid gap-4 sm:gap-6">
            {filteredProducts.length > 0 ? (
              filteredProducts.map((product) => (
                <Card key={product.id} className="hover:shadow-md transition-shadow">
-                 <CardContent className="p-6">
-                   <div className="flex items-center justify-between">
-                     <div className="flex items-center gap-4">
-                       <div className="p-2 bg-primary/10 rounded-lg">
-                         <Package className="h-6 w-6 text-primary" />
+                 <CardContent className="p-4 sm:p-6">
+                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                     <div className="flex items-start gap-3 sm:gap-4">
+                       <div className="p-2 bg-primary/10 rounded-lg flex-shrink-0">
+                         <Package className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
                        </div>
-                       <div>
-                         <h3 className="font-semibold">{product.name}</h3>
-                         <p className="text-sm text-muted-foreground">
+                       <div className="flex-1 min-w-0">
+                         <h3 className="font-semibold text-sm sm:text-base">{product.name}</h3>
+                         <p className="text-xs sm:text-sm text-muted-foreground">
                            {product.category} • ৳{product.price.toLocaleString()}
                          </p>
-                         <div className="flex items-center gap-2 mt-1">
-                           <Badge variant="outline">{product.stock_quantity || 0} in stock</Badge>
-                           <Badge variant={product.in_stock ? "default" : "destructive"}>
+                         <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-1">
+                           <Badge variant="outline" className="text-xs">{product.stock_quantity || 0} in stock</Badge>
+                           <Badge variant={product.in_stock ? "default" : "destructive"} className="text-xs">
                              {product.in_stock ? "In Stock" : "Out of Stock"}
                            </Badge>
                            {product.is_featured && (
-                             <Badge variant="secondary">Featured</Badge>
+                             <Badge variant="secondary" className="text-xs">Featured</Badge>
                            )}
                          </div>
                          {product.sizes && product.sizes.length > 0 && (
@@ -441,12 +441,13 @@ export default function AdminProductsPage() {
                          )}
                        </div>
                      </div>
-                     <div className="flex items-center gap-2">
+                     <div className="flex items-center gap-2 self-end">
                        <Button 
                          variant="outline" 
                          size="sm"
                          onClick={() => handleViewProduct(product)}
                          title="View Product"
+                         className="h-8 w-8 sm:h-9 sm:w-9 p-0"
                        >
                          <Eye className="h-4 w-4" />
                        </Button>
@@ -455,13 +456,14 @@ export default function AdminProductsPage() {
                          size="sm"
                          onClick={() => handleEditProduct(product)}
                          title="Edit Product"
+                         className="h-8 w-8 sm:h-9 sm:w-9 p-0"
                        >
                          <Edit className="h-4 w-4" />
                        </Button>
                        <Button 
                          variant="outline" 
                          size="sm" 
-                         className="text-red-600 hover:text-red-700"
+                         className="text-red-600 hover:text-red-700 h-8 w-8 sm:h-9 sm:w-9 p-0"
                          onClick={() => handleDeleteProduct(product)}
                          disabled={deletingProduct}
                          title="Delete Product"

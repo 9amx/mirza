@@ -5,8 +5,9 @@ interface CheckoutPageProps {
 }
 
 const CheckoutPage = async ({ searchParams }: CheckoutPageProps) => {
-  const isGuestCheckout = searchParams.guest === "true"
-  const isDirectBuy = searchParams.direct === "true"
+  const params = await searchParams
+  const isGuestCheckout = params.guest === "true"
+  const isDirectBuy = params.direct === "true"
   const user = null
 
   return (

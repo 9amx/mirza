@@ -166,9 +166,9 @@ export default function AdminOrders() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-4 sm:mb-6">
           <div className="flex-1">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -180,7 +180,7 @@ export default function AdminOrders() {
               />
             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <select
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
@@ -191,7 +191,7 @@ export default function AdminOrders() {
                 <option key={status} value={status}>{status}</option>
               ))}
             </select>
-            <Button variant="outline">
+            <Button variant="outline" className="sm:w-auto">
               <Filter className="h-4 w-4 mr-2" />
               Filter
             </Button>
@@ -199,7 +199,7 @@ export default function AdminOrders() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center gap-2">
@@ -255,14 +255,14 @@ export default function AdminOrders() {
             <div className="space-y-4">
               {filteredOrders.map((order) => (
                 <div key={order.id} className="border border-border rounded-lg p-4 hover:bg-muted/30 transition-colors">
-                  <div className="flex items-center justify-between mb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                        <ShoppingCart className="h-5 w-5 text-primary" />
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                        <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                       </div>
                       <div>
-                        <h3 className="font-semibold">Order #{order.id}</h3>
-                        <p className="text-sm text-muted-foreground">
+                        <h3 className="font-semibold text-sm sm:text-base">Order #{order.id}</h3>
+                        <p className="text-xs sm:text-sm text-muted-foreground">
                           {new Date(order.created_at).toLocaleDateString('en-US', {
                             year: 'numeric',
                             month: 'short',
@@ -274,14 +274,14 @@ export default function AdminOrders() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge className={getStatusColor(order.status)}>
+                      <Badge className={`${getStatusColor(order.status)} text-xs`}>
                         {order.status}
                       </Badge>
-                      <span className="text-lg font-bold">৳{order.total.toLocaleString()}</span>
+                      <span className="text-base sm:text-lg font-bold">৳{order.total.toLocaleString()}</span>
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-3">
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">Customer</p>
                       <p className="font-medium">{order.customer_name}</p>
@@ -301,18 +301,18 @@ export default function AdminOrders() {
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Calendar className="h-4 w-4" />
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                      <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
                       <span>Ordered {new Date(order.created_at).toLocaleDateString()}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Button size="sm" variant="outline" onClick={() => window.open(`/api/orders/${order.id}`, '_blank')}>
-                        <Eye className="h-4 w-4 mr-2" />
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                      <Button size="sm" variant="outline" onClick={() => window.open(`/api/orders/${order.id}`, '_blank')} className="text-xs">
+                        <Eye className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
                         View Details
                       </Button>
                       <select
-                        className="px-2 py-1 border rounded text-sm"
+                        className="px-2 py-1 border rounded text-xs sm:text-sm"
                         value={order.status}
                         onChange={(e) => updateOrderStatus(order.id, e.target.value)}
                       >
@@ -320,7 +320,7 @@ export default function AdminOrders() {
                           <option key={s} value={s}>{s}</option>
                         ))}
                       </select>
-                      <Button size="sm" variant="destructive" onClick={() => updateOrderStatus(order.id, 'Cancelled')}>
+                      <Button size="sm" variant="destructive" onClick={() => updateOrderStatus(order.id, 'Cancelled')} className="text-xs">
                         Cancel Order
                       </Button>
                     </div>

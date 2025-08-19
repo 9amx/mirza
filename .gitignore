@@ -93,3 +93,4 @@ ui-debug.log
 
 # Local data files
 data/uploads/
+.vercel
