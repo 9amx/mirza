@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, User, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, User, GoogleAuthProvider, signInWithPopup, sendEmailVerification } from 'firebase/auth'
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -32,6 +32,8 @@ const getFirebaseErrorMessage = (errorCode: string): string => {
       return 'Too many failed attempts. Please try again later.'
     case 'auth/user-disabled':
       return 'This account has been disabled. Please contact support.'
+    case 'auth/user-unverified':
+      return 'Please verify your email address before signing in. Check your inbox for a verification email.'
     
     // Sign up errors
     case 'auth/email-already-in-use':
@@ -62,6 +64,10 @@ const getFirebaseErrorMessage = (errorCode: string): string => {
 export const signUp = async (email: string, password: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+    
+    // Send email verification
+    await sendEmailVerification(userCredential.user)
+    
     return { user: userCredential.user, error: null }
   } catch (error: any) {
     const errorMessage = getFirebaseErrorMessage(error.code)
@@ -72,6 +78,13 @@ export const signUp = async (email: string, password: string) => {
 export const signIn = async (email: string, password: string) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
+    
+    // Check if email is verified
+    if (!userCredential.user.emailVerified) {
+      await signOut(auth)
+      return { user: null, error: 'Please verify your email address before signing in. Check your inbox for a verification email.' }
+    }
+    
     return { user: userCredential.user, error: null }
   } catch (error: any) {
     const errorMessage = getFirebaseErrorMessage(error.code)
@@ -104,6 +117,9 @@ export const signInWithGoogle = async () => {
   try {
     const provider = new GoogleAuthProvider()
     const userCredential = await signInWithPopup(auth, provider)
+    
+    // For Google sign-in, we don't need to check email verification
+    // as Google accounts are typically already verified
     return { user: userCredential.user, error: null }
   } catch (error: any) {
     const errorMessage = getFirebaseErrorMessage(error.code)
@@ -114,6 +130,21 @@ export const signInWithGoogle = async () => {
 // Auth state listener
 export const onAuthStateChange = (callback: (user: User | null) => void) => {
   return onAuthStateChanged(auth, callback)
+}
+
+// Email verification functions
+export const sendVerificationEmail = async (user: User) => {
+  try {
+    await sendEmailVerification(user)
+    return { error: null }
+  } catch (error: any) {
+    const errorMessage = getFirebaseErrorMessage(error.code)
+    return { error: errorMessage }
+  }
+}
+
+export const isEmailVerified = (user: User | null): boolean => {
+  return user?.emailVerified || false
 }
 
 export default app

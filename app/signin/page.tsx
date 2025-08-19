@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Eye, EyeOff, Mail, Lock, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { signIn, signInWithGoogle } from "@/lib/firebase"
+import { signIn, signInWithGoogle, sendVerificationEmail, auth } from "@/lib/firebase"
 
 export default function SignInPage() {
   const [email, setEmail] = useState("")
@@ -16,18 +16,24 @@ export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const [showResendOption, setShowResendOption] = useState(false)
   const router = useRouter()
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError("")
+    setShowResendOption(false)
 
     try {
       const result = await signIn(email, password)
       
       if (result.error) {
         setError(result.error)
+        // Show resend option if it's an email verification error
+        if (result.error.includes('verify your email')) {
+          setShowResendOption(true)
+        }
       } else {
         router.push("/")
       }
@@ -41,6 +47,7 @@ export default function SignInPage() {
   const handleGoogleSignIn = async () => {
     setIsLoading(true)
     setError("")
+    setShowResendOption(false)
 
     try {
       const result = await signInWithGoogle()
@@ -52,6 +59,34 @@ export default function SignInPage() {
       }
     } catch (err) {
       setError("Google sign in failed. Please try again.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleResendVerification = async () => {
+    setIsLoading(true)
+    setError("")
+
+    try {
+      // Try to sign in to get the user object
+      const result = await signIn(email, password)
+      
+      if (result.user) {
+        // Send verification email
+        const verificationResult = await sendVerificationEmail(result.user)
+        
+        if (verificationResult.error) {
+          setError(verificationResult.error)
+        } else {
+          setError("Verification email sent! Please check your inbox.")
+          setShowResendOption(false)
+        }
+      } else {
+        setError("Please enter correct credentials to resend verification email.")
+      }
+    } catch (err) {
+      setError("Failed to resend verification email. Please try again.")
     } finally {
       setIsLoading(false)
     }
@@ -90,6 +125,18 @@ export default function SignInPage() {
               {error && (
                 <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
                   {error}
+                  {showResendOption && (
+                    <div className="mt-2">
+                      <button
+                        type="button"
+                        onClick={handleResendVerification}
+                        className="text-primary hover:underline text-sm"
+                        disabled={isLoading}
+                      >
+                        Resend verification email
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
               

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowLeft } from "lucide-react"
+import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowLeft, CheckCircle } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { signUp, signInWithGoogle } from "@/lib/firebase"
@@ -24,6 +24,7 @@ export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [acceptTerms, setAcceptTerms] = useState(false)
+  const [isVerificationSent, setIsVerificationSent] = useState(false)
   const router = useRouter()
 
   const handleInputChange = (field: string, value: string) => {
@@ -60,7 +61,7 @@ export default function SignUpPage() {
       if (result.error) {
         setError(result.error)
       } else {
-        router.push("/")
+        setIsVerificationSent(true)
       }
     } catch (err) {
       setError("Sign up failed. Please try again.")
@@ -86,6 +87,64 @@ export default function SignUpPage() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  // Show verification message
+  if (isVerificationSent) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          {/* Back to Home */}
+          <Link 
+            href="/" 
+            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Home
+          </Link>
+
+          {/* Logo */}
+          <div className="text-center mb-8">
+            <h1 className="font-bold text-3xl font-[family-name:var(--font-playfair-display)]">
+              <span className="text-primary">Mirza</span>
+              <span className="text-accent">Garments</span>
+            </h1>
+          </div>
+
+          <Card className="shadow-xl border-border/50">
+            <CardContent className="pt-8 pb-6">
+              <div className="text-center">
+                <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+                <h2 className="text-2xl font-bold mb-4">Check Your Email</h2>
+                <p className="text-muted-foreground mb-6">
+                  We've sent a verification email to <strong>{formData.email}</strong>. 
+                  Please check your inbox and click the verification link to activate your account.
+                </p>
+                <div className="space-y-3">
+                  <Link href="/signin">
+                    <Button className="w-full">Go to Sign In</Button>
+                  </Link>
+                  <Link href="/">
+                    <Button variant="outline" className="w-full bg-transparent">
+                      Back to Home
+                    </Button>
+                  </Link>
+                </div>
+                <p className="text-sm text-muted-foreground mt-4">
+                  Didn't receive the email? Check your spam folder or{" "}
+                  <button 
+                    onClick={() => setIsVerificationSent(false)}
+                    className="text-primary hover:underline"
+                  >
+                    try signing up again
+                  </button>
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
   }
 
   return (
