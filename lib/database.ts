@@ -375,6 +375,66 @@ export class DatabaseService {
     }
   }
 
+  // Settings operations
+  static async getSettings() {
+    // If database is not configured, use file store
+    if (!isDatabaseConfigured) {
+      return { storeName: 'Mirza Garments', faviconPath: '', whatsappNumber: '' }
+    }
+
+    try {
+      const { data, error } = await supabase!
+        .from('settings')
+        .select('*')
+        .eq('id', 'default')
+        .single()
+      
+      if (error) {
+        console.error('Error fetching settings:', error)
+        return { storeName: 'Mirza Garments', faviconPath: '', whatsappNumber: '' }
+      }
+      
+      return {
+        storeName: data.store_name || 'Mirza Garments',
+        faviconPath: '',
+        whatsappNumber: data.contact_phone || ''
+      }
+    } catch (error) {
+      console.error('Database connection error, using default settings:', error)
+      return { storeName: 'Mirza Garments', faviconPath: '', whatsappNumber: '' }
+    }
+  }
+
+  static async updateSettings(updates: Partial<{ store_name: string; contact_phone: string }>) {
+    // If database is not configured, use file store
+    if (!isDatabaseConfigured) {
+      return { storeName: 'Mirza Garments', faviconPath: '', whatsappNumber: '' }
+    }
+
+    try {
+      const { data, error } = await supabase!
+        .from('settings')
+        .update({ ...updates, updated_at: new Date().toISOString() })
+        .eq('id', 'default')
+        .select()
+        .single()
+      
+      if (error) {
+        console.error('Error updating settings:', error)
+        return null
+      }
+      
+      return {
+        storeName: data.store_name || 'Mirza Garments',
+        faviconPath: '',
+        whatsappNumber: data.contact_phone || ''
+      }
+    } catch (error) {
+      console.error('Database connection error:', error)
+      return null
+    }
+  }
+
   // Analytics operations
   static async getDashboardStats() {
     const [products, orders, users] = await Promise.all([
