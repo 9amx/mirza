@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, User } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, onAuthStateChanged, User, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -96,6 +96,18 @@ export const logout = async () => {
   } catch (error: any) {
     const errorMessage = getFirebaseErrorMessage(error.code)
     return { error: errorMessage }
+  }
+}
+
+// Google Authentication
+export const signInWithGoogle = async () => {
+  try {
+    const provider = new GoogleAuthProvider()
+    const userCredential = await signInWithPopup(auth, provider)
+    return { user: userCredential.user, error: null }
+  } catch (error: any) {
+    const errorMessage = getFirebaseErrorMessage(error.code)
+    return { user: null, error: errorMessage }
   }
 }
 
